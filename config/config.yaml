@@ -1,0 +1,23 @@
+# Runtime parameters — loaded by AgentRegistry, passed as Graph(config=...).
+# Separate from config/agent.yaml (the static manifest).
+#
+# Every key below has a reader in src/ and changes observable behaviour; see
+# docs/02_design.md for the key-to-reader map.
+
+max_retry: 3
+timeout_s: 30
+
+# Retrieval bounds — read by DomainWorkflowGraph.register_nodes(), which hands
+# them to the nodes that enforce them.
+retrieval:
+  # Highest number of source documents carried into procedure extraction.
+  top_k: 5
+  # Entry cap on the knowledge-base documents a caller may supply per request.
+  max_caller_documents: 20
+  # Per-document size cap, in characters, applied before any parsing.
+  max_document_chars: 20000
+
+# Response bounds — read by DomainWorkflowGraph.register_nodes().
+response:
+  # Upper length limit on the generated answer; a longer answer is withheld.
+  max_response_chars: 10000
